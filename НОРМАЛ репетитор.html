@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профессиональный репетитор по математике | 15 лет опыта</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #ff7e5f;
+            --text-dark: #2d3748;
+            --text-medium: #4a5568;
+            --text-light: #718096;
+            --bg-light: #f8fafc;
+            --bg-white: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(203, 213, 224, 0.5);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --glass-effect: backdrop-filter: blur(10px) saturate(180%);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-medium);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Шапка с улучшенным мобильным меню */
+        header {
+            background-color: var(--bg-white);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            padding: 0 20px;
+        }
+        
+        header.scrolled {
+            height: 70px;
+            box-shadow: var(--shadow);
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--text-dark);
+            text-decoration: none;
+            z-index: 1002;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        /* Десктопное меню */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 30px;
+        }
+        
+        .cta-button:hover {
+            background-color: #ff6b4a;
+            box-shadow: 0 0 15px rgba(255, 126, 95, 0.5);
+        }
+        
+        /* Мобильное меню - полностью переработано */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1002;
+        }
+        
+        .mobile-menu-btn span {
+            font-size: 28px;
+            color: var(--text-dark);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--bg-white);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-close span {
+            font-size: 28px;
+            color: var(--text-dark);
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+            margin-top: 50px;
+        }
+        
+        .mobile-nav-links li {
+            margin-bottom: 25px;
+        }
+        
+        .mobile-nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: block;
+            padding: 8px 0;
+        }
+        
+        .mobile-nav-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .mobile-cta-button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: auto;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .mobile-cta-button:hover {
+            background-color: #ff6b4a;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero секция с улучшенной читаемостью */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), 
+                        url('https://images.unsplash.com/photo-1509869175650-a1d97972541a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            position: relative;
+            margin-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 0 0 60%;
+            padding-right: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .hero-image {
+            flex: 0 0 40%;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            letter-spacing: 0.5px;
+        }
+        
+        .hero h1 span {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .hero p.subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+        
+        .hero p.description {
+            margin-bottom: 40px;
+            font-size: 18px;
+            line-height: 1.6;
+            max-width: 600px;
+            color: var(--text-medium);
+        }
+        
+        .divider {
+            height: 2px;
+            background-color: var(--primary-color);
+            margin: 30px 0;
+            width: 80px;
+            opacity: 0.7;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .primary-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .primary-btn:hover {
+            background-color: #ff6b4a;
+            box-shadow: 0 0 15px rgba(255, 126, 95, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--text-dark);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid var(--text-dark);
+            transition: var(--transition);
+        }
+        
+        .secondary-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        /* Преимущества */
+        .benefits {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .benefit-card:nth-child(1) { animation: fadeIn 0.8s ease 0.2s forwards; }
+        .benefit-card:nth-child(2) { animation: fadeIn 0.8s ease 0.4s forwards; }
+        .benefit-card:nth-child(3) { animation: fadeIn 0.8s ease 0.6s forwards; }
+        .benefit-card:nth-child(4) { animation: fadeIn 0.8s ease 0.8s forwards; }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .benefit-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .benefit-card p {
+            line-height: 1.6;
+        }
+        
+        /* Обо мне */
+        .about {
+            padding: 100px 0;
+            background-color: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .about-text h3 {
+            font-size: 22px;
+            margin: 25px 0 15px;
+            color: var(--primary-color);
+        }
+        
+        .about-text h4 {
+            font-size: 18px;
+            margin: 20px 0 10px;
+            color: var(--text-medium);
+        }
+        
+        .about-text p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .about-text ul {
+            list-style-type: none;
+            margin: 20px 0;
+        }
+        
+        .about-text ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .about-text ul li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+        
+        .quote {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+        
+        /* Отзывы */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+        
+        .testimonials-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .testimonial-text {
+            font-size: 16px;
+            color: var(--text-medium);
+            margin-bottom: 20px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--border-color);
+        }
+        
+        .author-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .rating {
+            color: #ffc107;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #cbd5e0;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        /* Цены */
+        .pricing {
+            padding: 100px 0;
+            background-color: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+        
+        .pricing-card {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            padding: 40px 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pricing-card.recommended {
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .pricing-card.recommended:before {
+            content: 'Рекомендуем';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .pricing-card h3 {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .price {
+            font-size: 36px;
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+        }
+        
+        .period {
+            text-align: center;
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features {
+            list-style-type: none;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+        
+        .pricing-features li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .pricing-features li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+        
+        .pricing-btn-container {
+            margin-top: auto;
+        }
+        
+        .pricing-btn {
+            display: block;
+            text-align: center;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .pricing-btn:hover {
+            background-color: #ff6b4a;
+            box-shadow: 0 0 15px rgba(255, 126, 95, 0.3);
+        }
+        
+        /* FAQ */
+        .faq {
+            padding: 100px 0;
+            background-color: var(--bg-light);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-box {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--bg-white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+        
+        .accordion {
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .accordion-header {
+            padding: 20px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content-inner {
+            padding: 0 0 20px;
+            line-height: 1.6;
+        }
+        
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+        
+        .ask-question {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .ask-question:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .ask-question:hover:after {
+            width: 100%;
+        }
+        
+        /* Подвал */
+        footer {
+            background-color: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+            padding: 80px 0 0;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding-bottom: 60px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-size: 16px;
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-links.secondary a {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .subscribe-form {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .subscribe-form input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+        }
+        
+        .subscribe-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .subscribe-form button:hover {
+            background-color: #3a5a8a;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .hero-text {
+                flex: 0 0 55%;
+            }
+            
+            .hero-image {
+                flex: 0 0 45%;
+            }
+            
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .pricing-card:nth-child(3) {
+                grid-column: span 2;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text, .hero-image {
+                flex: 1 1 100%;
+                padding: 0;
+            }
+            
+            .hero-image {
+                margin-top: 40px;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p.subtitle {
+                font-size: 20px;
+            }
+            
+            .hero p.description {
+                font-size: 16px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .divider {
+                margin: 20px auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card:nth-child(3) {
+                grid-column: span 1;
+                max-width: 100%;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-container {
+                height: 70px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p.subtitle {
+                font-size: 18px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .primary-btn, .secondary-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .mobile-menu {
+                width: 90%;
+                padding: 25px 20px;
+            }
+            
+            .mobile-nav-links a {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка с новым мобильным меню -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">Math<span>Pro</span></a>
+            <button class="mobile-menu-btn">
+                <span class="material-icons">menu</span>
+            </button>
+            <nav class="desktop-nav">
+                <ul class="nav-links">
+                    <li><a href="#hero">Главная</a></li>
+                    <li><a href="#benefits">Методика</a></li>
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#pricing">Цены</a></li>
+                    <li><a href="#faq">Вопросы</a></li>
+                </ul>
+                <button class="cta-button">Записаться</button>
+            </nav>
+        </div>
+        
+        <!-- Мобильное меню -->
+        <div class="mobile-menu-overlay"></div>
+        <div class="mobile-menu">
+            <button class="mobile-menu-close">
+                <span class="material-icons">close</span>
+            </button>
+            <ul class="mobile-nav-links">
+                <li><a href="#hero">Главная</a></li>
+                <li><a href="#benefits">Методика</a></li>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#pricing">Цены</a></li>
+                <li><a href="#faq">Вопросы</a></li>
+            </ul>
+            <button class="mobile-cta-button">Записаться</button>
+        </div>
+    </header>
+
+    <!-- Hero секция -->
+    <section class="hero" id="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Профессиональный <span>репетитор по математике</span></h1>
+                <p class="subtitle">15 лет успешной подготовки к экзаменам</p>
+                <div class="divider"></div>
+                <p class="description">Индивидуальный подход к каждому ученику, эффективные методики обучения и гарантированное улучшение результатов.</p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="primary-btn">Начать занятия</a>
+                    <a href="#about" class="secondary-btn">Подробнее</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Репетитор по математике">
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>Моя методика обучения</h2>
+                <p>Индивидуальный подход и проверенные временем техники, которые помогут вам понять и полюбить математику</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon material-icons">calculate</div>
+                    <h3>Системный подход</h3>
+                    <p>Пошаговое изучение материала от простого к сложному с постоянным закреплением результатов</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon material-icons">school</div>
+                    <h3>Подготовка к экзаменам</h3>
+                    <p>Отработка типовых задач ЕГЭ и ОГЭ, разбор сложных тем и обучение правильному оформлению</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon material-icons">psychology</div>
+                    <h3>Развитие мышления</h3>
+                    <p>Учу не просто решать задачи по шаблону, а понимать суть математических концепций</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon material-icons">schedule</div>
+                    <h3>Гибкий график</h3>
+                    <p>Занятия в удобное для вас время, включая выходные дни и возможность онлайн-обучения</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Обо мне -->
+    <section class="about" id="about">
+        <div class="container about-container">
+            <div class="about-image">
+                <img src="https://sun9-57.userapi.com/c11429/u137955806/-6/x_65802668.jpg">
+            </div>
+            <div class="about-text">
+                <h2>Обо мне</h2>
+                <p>Меня зовут [Ваше имя], я профессиональный репетитор по математике с 15-летним опытом работы. За это время я помог более 200 ученикам улучшить свои знания и успешно сдать экзамены.</p>
+                
+                <h3>Образование</h3>
+                <ul>
+                    <li>Высшее математическое образование (МГУ, механико-математический факультет)</li>
+                    <li>Сертификат "Методика подготовки к ЕГЭ по математике"</li>
+                    <li>Курсы повышения квалификации для преподавателей</li>
+                </ul>
+                
+                <h3>Опыт работы</h3>
+                <h4>Преподавательская деятельность</h4>
+                <ul>
+                    <li>Преподаватель математики в физико-математическом лицее (2008-2015)</li>
+                    <li>Репетитор по математике (с 2008 года по настоящее время)</li>
+                </ul>
+                
+                <div class="quote">
+                    "Математика — это не просто цифры и формулы, это способ мышления. Моя цель — научить вас мыслить логически и находить решения даже для самых сложных задач."
+                </div>
+                
+                <h3>Результаты учеников</h3>
+                <ul>
+                    <li>Средний балл моих учеников на ЕГЭ — 82</li>
+                    <li>15 учеников набрали 90+ баллов за последние 3 года</li>
+                    <li>100% поступление в выбранные вузы</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Отзывы учеников</h2>
+                <p>Что говорят мои ученики и их родители о нашей совместной работе</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="rating">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="testimonial-text">"Благодаря занятиям с [Ваше имя] я смогла сдать ЕГЭ по математике на 94 балла! Объясняет очень понятно, находит подход к каждому ученику. Особенно помогли разборы сложных задач из второй части."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Анна" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Анна</h4>
+                            <p>ученица, 11 класс</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" style="display:none;">
+                    <div class="rating">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="testimonial-text">"Сын занимался весь 10 класс, результат потрясающий - с тройки вышли на твердую четверку. Преподаватель умеет заинтересовать предметом, что для меня было самым важным."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ольга" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Ольга</h4>
+                            <p>мама ученика 10 класса</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" style="display:none;">
+                    <div class="rating">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="testimonial-text">"Готовился к поступлению в Физтех, занимались углубленно 2 года. Поступил на бюджет! Преподаватель знает предмет на очень высоком уровне и умеет объяснять сложные вещи просто."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Дмитрий" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Дмитрий</h4>
+                            <p>студент МФТИ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" style="display:none;">
+                    <div class="rating">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="testimonial-text">"После 5 занятий дочь наконец-то поняла дроби! Очень терпеливый преподаватель, умеет работать с детьми, которые боятся математики. Рекомендую всем родителям."</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Ирина" class="author-avatar">
+                        <div class="author-info">
+                            <h4>Ирина</h4>
+                            <p>мама ученицы 6 класса</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-dots">
+                    <div class="dot active"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Цены -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Стоимость занятий</h2>
+                <p>Гибкая система тарифов для достижения ваших образовательных целей</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Базовый</h3>
+                    <div class="price">1 200 ₽</div>
+                    <div class="period">за 60 минут</div>
+                    <ul class="pricing-features">
+                        <li>Разовые занятия</li>
+                        <li>Разбор конкретных тем</li>
+                        <li>Помощь с домашними заданиями</li>
+                        <li>Консультации по email</li>
+                    </ul>
+                    <div class="pricing-btn-container">
+                        <a href="#" class="pricing-btn">Выбрать</a>
+                    </div>
+                </div>
+                <div class="pricing-card recommended">
+                    <h3>Стандарт</h3>
+                    <div class="price">3 500 ₽</div>
+                    <div class="period">в неделю (3 занятия)</div>
+                    <ul class="pricing-features">
+                        <li>Систематические занятия</li>
+                        <li>Индивидуальная программа</li>
+                        <li>Регулярные проверочные работы</li>
+                        <li>Доступ к учебным материалам</li>
+                        <li>Поддержка между занятиями</li>
+                    </ul>
+                    <div class="pricing-btn-container">
+                        <a href="#" class="pricing-btn">Выбрать</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <h3>Премиум</h3>
+                    <div class="price">6 000 ₽</div>
+                    <div class="period">в неделю (5 занятий)</div>
+                    <ul class="pricing-features">
+                        <li>Интенсивная подготовка</li>
+                        <li>Углубленное изучение тем</li>
+                        <li>Пробные экзамены с разбором</li>
+                        <li>Персональный куратор</li>
+                        <li>Приоритетная поддержка</li>
+                    </ul>
+                    <div class="pricing-btn-container">
+                        <a href="#" class="pricing-btn">Выбрать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="container faq-container">
+            <div class="section-title">
+                <h2>Частые вопросы</h2>
+                <p>Ответы на самые популярные вопросы от учеников и родителей</p>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Поиск по вопросам...">
+            </div>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>С какого возраста можно начинать занятия?</h3>
+                        <div class="accordion-icon">+</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Я работаю с учениками начиная с 5 класса. Для младших школьников рекомендую специалистов по начальной школе, так как методика преподавания существенно отличается.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Как проходят онлайн-занятия?</h3>
+                        <div class="accordion-icon">+</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Онлайн-занятия проводятся через Zoom или Skype с использованием виртуальной доски. Все материалы заранее высылаются ученику. Эффективность онлайн-занятий не уступает очным встречам при условии соблюдения дисциплины.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Сколько времени нужно для подготовки к ЕГЭ?</h3>
+                        <div class="accordion-icon">+</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Оптимальный срок — 1-2 года при занятиях 2 раза в неделю. Если начать подготовку в 11 классе, рекомендую интенсивный курс (3-4 занятия в неделю). Все зависит от начального уровня ученика и целевого балла.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3>Можно ли оплачивать занятия частями?</h3>
+                        <div class="accordion-icon">+</div>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Да, для тарифов "Стандарт" и "Премиум" возможна помесячная оплата. Для разовых занятий оплата производится перед каждым уроком.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="ask-question">Задать свой вопрос</a>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>MathPro</h3>
+                    <p>Профессиональные услуги репетитора по математике с 15-летним опытом работы.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><span class="material-icons">facebook</span></a>
+                        <a href="#" class="social-link"><span class="material-icons">telegram</span></a>
+                        <a href="#" class="social-link"><span class="material-icons">alternate_email</span></a>
+                        <a href="#" class="social-link"><span class="material-icons">video_library</span></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Главная</a></li>
+                        <li><a href="#benefits">Методика</a></li>
+                        <li><a href="#about">Обо мне</a></li>
+                        <li><a href="#testimonials">Отзывы</a></li>
+                        <li><a href="#pricing">Цены</a></li>
+                        <li><a href="#faq">Вопросы</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <div class="contact-info">
+                        <span class="material-icons contact-icon">phone</span>
+                        <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                    </div>
+                    <div class="contact-info">
+                        <span class="material-icons contact-icon">email</span>
+                        <a href="mailto:mathpro@example.com">mathpro@example.com</a>
+                    </div>
+                    <div class="contact-info">
+                        <span class="material-icons contact-icon">schedule</span>
+                        <span>Пн-Пт: 9:00 - 20:00</span>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Подписаться</h3>
+                    <p>Будьте в курсе новых материалов и специальных предложений.</p>
+                    <form class="subscribe-form">
+                        <input type="email" placeholder="Ваш email">
+                        <button type="submit"><span class="material-icons">send</span></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 MathPro. Все права защищены.</p>
+                <ul class="footer-links secondary">
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                    <li><a href="#">Договор-оферта</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Фиксированная шапка при скролле
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Управление мобильным меню
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const body = document.body;
+        
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+        
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileMenuClose.addEventListener('click', toggleMenu);
+        mobileMenuOverlay.addEventListener('click', toggleMenu);
+        
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+        
+        // Слайдер отзывов
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial-card');
+        const dots = document.querySelectorAll('.dot');
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.style.display = 'none');
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].style.display = 'block';
+            dots[currentSlide].classList.add('active');
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Автопрокрутка слайдера каждые 5 секунд
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+        
+        // Инициализация первого слайда
+        showSlide(0);
+        
+        // Аккордеон FAQ
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                const currentlyActive = document.querySelector('.accordion-item.active');
+                if(currentlyActive && currentlyActive !== item) {
+                    currentlyActive.classList.remove('active');
+                    currentlyActive.querySelector('.accordion-content').style.maxHeight = null;
+                }
+                
+                item.classList.toggle('active');
+                const content = item.querySelector('.accordion-content');
+                if(item.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = null;
+                }
+            });
+        });
+        
+        // Плавная прокрутка для навигации
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
